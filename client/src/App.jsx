@@ -6,7 +6,10 @@ import UserTable from './components/userTable';
 
 const App = () => {
   return (
-    <div>
+    <>
+    <BrowerRouter>
+    <Routes>
+      <Route path="/" element={<UserForm/>}></Route>
       <h1>User Management</h1>
       <h2>Create User</h2>
       <UserForm />
@@ -14,7 +17,9 @@ const App = () => {
       <UserUpdateForm />
       <h2>User Table</h2>
       <UserTable/>
-    </div>
+    </Routes>
+    </BrowerRouter>
+    </>
   );
 };
 
