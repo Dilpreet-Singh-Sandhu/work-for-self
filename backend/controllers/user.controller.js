@@ -87,6 +87,29 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const loginUser =  async (req, res) => {
+  const { username, password } = req.body;
+
+  // Check if user exists
+  const user = User.find((u) => u.username === username);
+  if (!user) {
+    return res.status(400).json({ message: 'Invalid credentials' });
+  }
+
+  // Check if the password matches
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(400).json({ message: 'Invalid credentials' });
+  }
+
+  // Create a JWT token
+  const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, {
+    expiresIn: '1h',
+  });
+
+  return res.json({ token });
+};
+
 
 export {
   getAllUsers,

@@ -4,26 +4,25 @@ import UserForm from './components/createUser';
 import UserUpdateForm from './components/updateUser';
 import UserTable from './components/userTable';
 import LoginForm from './components/loginForm';
-import {BrowerRouter, Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+
 
 const App = () => {
   return (
     <>
-    <BrowerRouter>
     <Routes>
       <Route path="/" element={<LoginForm/>}></Route>
-      <h1>User Management</h1>
-      <h2>Create User</h2>
+      {/* <h1>User Management</h1>
+      <h2>Create User</h2> */}
       <Route path="/register" element={<UserForm/>}></Route>
       <Route path="/update" element={<UserUpdateForm/>}></Route>
       <Route path="/showTable" element={<UserTable/>}></Route>
       <UserForm />
-      <h2>Update User</h2>
+      {/* <h2>Update User</h2> */}
       <UserUpdateForm />
-      <h2>User Table</h2>
+      {/* <h2>User Table</h2> */}
       <UserTable/>
     </Routes>
-    </BrowerRouter>
     </>
   );
 };

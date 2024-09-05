@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize('employee', 'root', 'Dilpreet@123', {
+const sequelize = new Sequelize('love', 'root', 'Dilpreet@123', {
   host: 'localhost',
   dialect: 'mysql',
   logging: console.log, // Optional: Logs SQL queries to the console
