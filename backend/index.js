@@ -3,9 +3,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import sequelize from './db.js';
 import userRoutes from './routes/user.route.js';
+import cors from 'cors';
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use('/users', userRoutes);
 

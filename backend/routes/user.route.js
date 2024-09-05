@@ -15,7 +15,7 @@ userRouter.get("/", getAllUsers);
 userRouter.post("/create", createUser);
 
 // Update user by ID
-userRouter.put("/update:id", updateUser);
+userRouter.put("/update/:id", updateUser);
 
 // Delete user by ID
 userRouter.delete("/delete:id", deleteUser);

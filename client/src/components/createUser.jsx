@@ -21,7 +21,7 @@ const UserForm = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/users",
+        "http://localhost:3000/users/create",
         formData
       );
       console.log("User created:", response.data);

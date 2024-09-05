@@ -1,6 +1,5 @@
 import User from "../models/user.model.js";
-
-
+import bcrypt from 'bcrypt';
 
 const getAllUsers = async (req, res) => {
   const users = await User.findAll();
@@ -19,41 +18,49 @@ const createUser = async (req, res) => {
     });
     res.status(201).json(user);
   } catch (error) {
+    console.log("This is the create error", error);
     res
       .status(500)
-      .json({ message: "Error creating user", error: error.message });
+      .json({ message: "Error creating user", error });
   }
 };
 
 
-
 const updateUser = async (req, res) => {
-  const { id } = req.params;
-  const { username, email, password } = req.body;
+  const { id } = req.params; // Extract id from request parameters
+  const { username, email, password } = req.body; // Extract fields to update from request body
 
   try {
-    const user = await User.findByPk(id);
+    // Find the user by primary key (id)
+    const user = await User.findByPk(id); // `findByPk` is generally preferred for finding by primary key
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
+    // Hash the new password if provided; otherwise, use the existing password
     const hashedPassword = password
       ? await bcrypt.hash(password, 10)
       : user.password;
 
-    await user.update({ username, email, password: hashedPassword });
+    // Update the user with the provided details
+    await user.update({
+      username: username || user.username, // Update only if provided
+      email: email || user.email, // Update only if provided
+      password: hashedPassword // Always update password if provided
+    });
+
+    // Return the updated user
     res.json(user);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error updating user", error: error.message });
+    console.error("Update Error:", error); // Log errors to the console
+    res.status(500).json({ message: "Error updating user", error });
   }
 };
 
 
-
 const deleteUser = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.body;
 
   try {
     const user = await User.findByPk(id);
@@ -61,12 +68,22 @@ const deleteUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    await user.destroy();
+    await user.destroy({
+      where: {
+        id: 1
+      }
+    }).then(deletedRows => {
+      console.log(`${deletedRows} row(s) deleted.`);
+    }).catch(err => {
+      console.error('Error deleting row:', err);
+    });
+
     res.json({ message: "User deleted" });
   } catch (error) {
+    console.log("This is delete Error", error);
     res
       .status(500)
-      .json({ message: "Error deleting user", error: error.message });
+      .json({ message: "Error deleting user", error });
   }
 };
 
