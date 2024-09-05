@@ -2,7 +2,7 @@
 import React from 'react';
 import UserForm from './components/createUser';
 import UserUpdateForm from './components/updateUser';
-import UserDelete from './components/deleteUser';
+import UserTable from './components/userTable';
 
 const App = () => {
   return (
@@ -12,8 +12,8 @@ const App = () => {
       <UserForm />
       <h2>Update User</h2>
       <UserUpdateForm />
-      <h2>Delete User</h2>
-      <UserDelete />
+      <h2>User Table</h2>
+      <UserTable/>
     </div>
   );
 };

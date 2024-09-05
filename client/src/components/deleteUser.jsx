@@ -1,6 +1,8 @@
 // src/components/UserDelete.jsx
 import React, { useState } from "react";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserDelete = () => {
   const [userId, setUserId] = useState("");
@@ -14,15 +16,16 @@ const UserDelete = () => {
       await axios.delete(`http://localhost:3000/users/delete:id`, {
         data: { id: userId } // Include the ID in the request body
       });
-      console.log("User deleted");
+      toast.success("User deleted successfully");
       setUserId(""); // Clear input after successful deletion
     } catch (error) {
       console.error("Error deleting user:", error);
+      toast.error("Error deleting user. Please try again.");
     }
   };
 
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex flex-col items-center space-y-4">
       <input
         type="text"
         value={userId}
@@ -37,6 +40,7 @@ const UserDelete = () => {
       >
         Delete User
       </button>
+      <ToastContainer />
     </div>
   );
 };
